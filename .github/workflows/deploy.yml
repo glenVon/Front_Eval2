@@ -3,7 +3,7 @@ name: CI/CD Frontend Innovatech
 on:
   push:
     branches:
-      - deploy # Se activa solo al empujar a la rama deploy
+      - deploy
 
 jobs:
   deploy-front:
@@ -15,22 +15,13 @@ jobs:
       - name: Desplegar en EC2 Frontend vía SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.EC2_HOST }} # Tu IP Elástica: 44.214.67.2
+          host: ${{ secrets.EC2_HOST }}      # Tu IP Elástica: 44.214.67.2
           username: ec2-user
-          key: ${{ secrets.EC2_SSH_KEY }} # Tu llave devops.pem
+          key: ${{ secrets.EC2_SSH_KEY }}    # Tu llave devops.pem
           script: |
-            # Crear carpeta de la app si no existe y entrar
             mkdir -p ~/frontend-app && cd ~/frontend-app
-            
-            # Limpiar contenido anterior para asegurar un despliegue limpio
             rm -rf *
-            
-            # Clonar la rama deploy directamente en la máquina EC2
             git clone -b deploy https://github.com/glenVon/Front_Eval2.git .
-            
-            # Reconstruir la imagen con el Dockerfile multi-stage y levantar
             docker compose down || true
             docker compose up -d --build
-            
-            # Limpiar imágenes huérfanas/antiguas para optimizar espacio en la EC2
             docker image prune -f
