@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: .
+    container_name: innovatech-frontend-app
+    ports:
+      - "80:5000" # Mapea el puerto HTTP estándar al 5000 de Flask
+    environment:
+      - BACKEND_URL=http://10.0.152.125:3000 # Usa la IP privada de tu EC2 Backend
+    restart: always
