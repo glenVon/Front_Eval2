@@ -19,9 +19,18 @@ jobs:
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}    # Tu llave devops.pem
           script: |
+            # 1. Crear y asegurar la carpeta del proyecto
             mkdir -p ~/frontend-app && cd ~/frontend-app
-            rm -rf *
+            
+            # 2. Limpiar contenido antiguo de forma segura
+            rm -rf * .git
+            
+            # 3. Clonar el repositorio apuntando a la rama deploy
             git clone -b deploy https://github.com/glenVon/Front_Eval2.git .
+            
+            # 4. Orquestar el contenedor usando la sintaxis moderna (sin guion medio)
             docker compose down || true
             docker compose up -d --build
+            
+            # 5. Limpieza preventiva de almacenamiento
             docker image prune -f
