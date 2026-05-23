@@ -2,10 +2,26 @@ version: '3.8'
 
 services:
   frontend:
-    build: .
-    container_name: innovatech-frontend-app
+    build: ./frontend-app
+    container_name: navigatech-frontend-app
     ports:
-      - "80:5000" # Mapea el puerto HTTP estándar al 5000 de Flask
+      - "80:5000"
+    volumes:
+      - ./frontend-app:/app   # <--- ESTO CREA EL PUENTE EN VIVO
     environment:
-      - BACKEND_URL=http://10.0.152.125:3000 # Usa la IP privada de tu EC2 Backend
+      - BACKEND_URL=http://44.214.67.2:3000
+      - DEBUG=True            # <--- RECARGA FLASK AUTOMÁTICAMENTE AL GUARDAR
+    restart: always
+
+  backend:
+    build: ./backend-publico
+    container_name: innovatech-backend-publico
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend-publico:/app   # <--- PUENTE EN VIVO PARA EL BACKEND
+    environment:
+      - PORT=3000
+      - DB_HOST=localhost # Ajusta tu DB si aplica
+    command: sh -c "npm install && npm run dev" # <--- Usa nodemon (está en tu package.json)
     restart: always
