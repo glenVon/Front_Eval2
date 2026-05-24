@@ -4,13 +4,6 @@
 
 {% block page_header %}
 
-<style>
-    body{
-    background-image: url('eva.jpg');
-    background-size: cover;
-    }
-</style>
-
 
 <h1 class="display-4 text-center">
     <i class="fas fa-users text-primary"></i> Lista de Usuarios
@@ -19,6 +12,27 @@
 {% endblock %}
 
 {% block content %}
+<style>
+    body {
+        /* Reemplaza la URL de abajo por el link de la imagen que quieras */
+        background-image: url('eva.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+    }
+    
+    /* Hacemos las tarjetas un poco transparentes para que se vea el fondo */
+    .card {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Le damos un fondo oscuro sutil al título para que se lea bien sobre cualquier imagen */
+    .display-4, .text-muted.text-center {
+        text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+    }
+</style>
 <!-- Botón para crear nuevo usuario -->
 <div class="row mb-4">
     <div class="col-12 text-center">
