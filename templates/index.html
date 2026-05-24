@@ -14,8 +14,8 @@
 {% block content %}
 <style>
     body {
-        /* Esta etiqueta le dice a Python que busque en la carpeta static */
-        background-image: url("{{ url_for('static', filename='eva.jpg') }}");
+        /* Escribimos la ruta /static/ directamente */
+        background-image: url('/static/eva.jpg');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
